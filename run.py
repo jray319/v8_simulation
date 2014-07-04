@@ -117,6 +117,18 @@ if args.condor:
   if which.which('condor') is None:
     sys.exit('[ERROR] condor is not found in the system.')
 
+# Get full suite name.
+if args.suite_name == 'jsbench':
+  args.suite_name = 'jsbench-2012.1'
+elif args.suite_name == 'sunspider':
+  args.suite_name = 'sunspider-0.9.1'
+
+# Set simulation function name correctly.
+if 'sunspider' in args.suite_name:
+  args.sim_func = 'runBenchmark'
+
+print args.suite_name
+
 # Locate tests to run.
 tests = []
 benchmark_suite_dir = os.path.join('./benchmarks', args.suite_name)
