@@ -1,0 +1,28 @@
+Warning: unknown flag --init_new_space_size=65536.
+Try --help for options
+[9549]     5463 ms: Mark-sweep 0.9 (18.9) -> 0.8 (18.9) MB, 7 / 394.9 ms [Isolate::RequestGarbageCollection] [GC in old space requested].
+[9549]     6321 ms: Mark-sweep 12.1 (31.0) -> 12.1 (31.0) MB, 45.7 ms (+ 103.3 ms in 3 steps since start of marking, biggest step 98.6 ms) [StackGuard GC request] [GC in old space requested].
+[9549]    50937 ms: Scavenge 13.6 (32.0) -> 13.1 (33.0) MB, 78.3 ms [allocation failure].
+[9549]    61735 ms: Scavenge 14.4 (33.0) -> 14.0 (33.0) MB, 37.8 ms [allocation failure].
+Time: 7549ms
+[9549]    65077 ms: Mark-sweep 14.8 (35.0) -> 14.0 (35.0) MB, 76.3 ms [Isolate::RequestGarbageCollection] [GC in old space requested].
+[9549]   111585 ms: Scavenge 25.2 (44.3) -> 24.5 (44.3) MB, 7.2 ms [allocation failure].
+Time: 2714ms
+[9549]   116579 ms: Mark-sweep 25.4 (45.3) -> 23.7 (45.3) MB, 53.4 ms [Isolate::RequestGarbageCollection] [GC in old space requested].
+[9549]   159841 ms: Scavenge 34.9 (54.7) -> 34.1 (54.7) MB, 4.6 ms [allocation failure].
+Time: 2096ms
+[9549]   164158 ms: Mark-sweep 35.1 (54.7) -> 32.9 (55.7) MB, 66.5 ms [Isolate::RequestGarbageCollection] [GC in old space requested].
+PROFILE BEGIN
+Time: 16346ms
+[9549] Process starting.
+[9549] Thread 0 starting..
+[9549] Code cache flushed before transitioning to fast skip mode
+[9549] Thread 1 starting..
+[9549] Thread 2 starting..
+[9549] Thread 3 starting..
+[9549] Thread 4 starting..
+[9549] Thread 5 starting..
+[9549] Code cache flushed before transitioning to simulation mode
+[9549] SIMULATION BEGIN (Thread 0)
+[9549] SIMULATION END (Thread 0)
+[9549] Process finishing.

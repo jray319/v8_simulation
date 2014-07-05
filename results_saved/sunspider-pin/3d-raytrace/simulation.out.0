@@ -1,0 +1,56 @@
+Warning: unknown flag --init_new_space_size=65536.
+Try --help for options
+[9355]     5425 ms: Mark-sweep 0.8 (18.9) -> 0.7 (18.9) MB, 7 / 385.7 ms [Isolate::RequestGarbageCollection] [GC in old space requested].
+[9355]     8342 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 78.9 ms [Runtime::PerformGC].
+[9355]     8393 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 12.5 ms [Runtime::PerformGC].
+[9355]     8416 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.9 ms [Runtime::PerformGC].
+[9355]     8435 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.2 ms [Runtime::PerformGC].
+[9355]     8455 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.2 ms [Runtime::PerformGC].
+[9355]     8475 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.2 ms [Runtime::PerformGC].
+[9355]     8494 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.2 ms [Runtime::PerformGC].
+[9355]     8514 ms: Scavenge 1.9 (18.9) -> 0.9 (18.9) MB, 0.2 ms [Runtime::PerformGC].
+[9355]     8533 ms: Scavenge 1.9 (18.9) -> 0.9 (18.9) MB, 0.2 ms [Runtime::PerformGC].
+[9355]     8552 ms: Scavenge 1.9 (18.9) -> 0.9 (18.9) MB, 0.3 ms [Runtime::PerformGC].
+[9355]     8570 ms: Scavenge 1.9 (18.9) -> 0.9 (18.9) MB, 0.2 ms [Runtime::PerformGC].
+[9355]     8589 ms: Scavenge 1.9 (18.9) -> 0.9 (18.9) MB, 0.2 ms [Runtime::PerformGC].
+[9355]     8934 ms: Scavenge 2.0 (18.9) -> 1.1 (18.9) MB, 6.9 ms [allocation failure].
+[9355]     9362 ms: Scavenge 2.0 (18.9) -> 1.2 (19.9) MB, 2.6 ms [Runtime::PerformGC].
+[9355]     9380 ms: Scavenge 2.1 (19.9) -> 1.2 (19.9) MB, 0.4 ms [Runtime::PerformGC].
+[9355]     9399 ms: Scavenge 2.1 (19.9) -> 1.2 (19.9) MB, 0.2 ms [Runtime::PerformGC].
+[9355]     9419 ms: Scavenge 2.1 (19.9) -> 1.2 (19.9) MB, 0.3 ms [Runtime::PerformGC].
+[9355]     9439 ms: Scavenge 2.1 (19.9) -> 1.2 (19.9) MB, 0.2 ms [Runtime::PerformGC].
+[9355]     9458 ms: Scavenge 2.1 (19.9) -> 1.2 (19.9) MB, 0.2 ms [Runtime::PerformGC].
+[9355]     9477 ms: Scavenge 2.1 (19.9) -> 1.2 (19.9) MB, 0.2 ms [Runtime::PerformGC].
+[9355]     9497 ms: Scavenge 2.1 (19.9) -> 1.2 (19.9) MB, 0.2 ms [Runtime::PerformGC].
+[9355]     9519 ms: Scavenge 2.1 (19.9) -> 1.2 (19.9) MB, 0.2 ms [Runtime::PerformGC].
+[9355]     9538 ms: Scavenge 2.2 (19.9) -> 1.2 (19.9) MB, 0.2 ms [Runtime::PerformGC].
+[9355]     9557 ms: Scavenge 2.2 (19.9) -> 1.2 (19.9) MB, 0.2 ms [Runtime::PerformGC].
+[9355]     9577 ms: Scavenge 2.2 (19.9) -> 1.2 (19.9) MB, 0.2 ms [Runtime::PerformGC].
+[9355]     9598 ms: Scavenge 2.2 (19.9) -> 1.2 (19.9) MB, 0.2 ms [Runtime::PerformGC].
+[9355]     9818 ms: Scavenge 2.2 (19.9) -> 1.3 (19.9) MB, 1.6 ms [Runtime::PerformGC].
+[9355]     9837 ms: Scavenge 2.2 (19.9) -> 1.3 (19.9) MB, 0.8 ms [Runtime::PerformGC].
+[9355]     9856 ms: Scavenge 2.3 (19.9) -> 1.3 (19.9) MB, 0.2 ms [Runtime::PerformGC].
+[9355]     9876 ms: Scavenge 2.3 (19.9) -> 1.3 (19.9) MB, 0.2 ms [Runtime::PerformGC].
+[9355]     9896 ms: Scavenge 2.3 (19.9) -> 1.3 (19.9) MB, 0.2 ms [Runtime::PerformGC].
+[9355]     9916 ms: Scavenge 2.3 (19.9) -> 1.3 (19.9) MB, 0.2 ms [Runtime::PerformGC].
+[9355]     9935 ms: Scavenge 2.3 (19.9) -> 1.3 (19.9) MB, 0.2 ms [Runtime::PerformGC].
+[9355]     9956 ms: Scavenge 2.3 (19.9) -> 1.3 (19.9) MB, 0.2 ms [Runtime::PerformGC].
+[9355]     9976 ms: Scavenge 2.3 (19.9) -> 1.3 (19.9) MB, 0.2 ms [Runtime::PerformGC].
+[9355]     9995 ms: Scavenge 2.3 (19.9) -> 1.3 (19.9) MB, 0.2 ms [Runtime::PerformGC].
+[9355]    10014 ms: Scavenge 2.3 (19.9) -> 1.3 (19.9) MB, 0.2 ms [Runtime::PerformGC].
+[9355]    10033 ms: Scavenge 2.3 (19.9) -> 1.3 (19.9) MB, 0.2 ms [Runtime::PerformGC].
+[9355]    10052 ms: Scavenge 2.3 (19.9) -> 1.3 (19.9) MB, 0.2 ms [Runtime::PerformGC].
+[9355]    10110 ms: Mark-sweep 1.8 (19.9) -> 1.1 (19.9) MB, 21.6 ms [Isolate::RequestGarbageCollection] [GC in old space requested].
+PROFILE BEGIN
+[9355] Process starting.
+[9355] Thread 0 starting..
+[9355] Code cache flushed before transitioning to fast skip mode
+[9355] Thread 1 starting..
+[9355] Thread 2 starting..
+[9355] Thread 3 starting..
+[9355] Thread 4 starting..
+[9355] Thread 5 starting..
+[9355] Code cache flushed before transitioning to simulation mode
+[9355] SIMULATION BEGIN (Thread 0)
+[9355] SIMULATION END (Thread 0)
+[9355] Process finishing.

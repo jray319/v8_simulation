@@ -1,0 +1,13 @@
+UsefulWork: 0 (0%)
+    UsefulWork: 0
+CrankshaftChecks: 0 (0%)
+FullCompilerChecks: 0 (0%)
+IC_Runtime: 20669 (0%)
+    IC_CallIC_Miss: 16892
+    IC_LoadIC_Miss: 3777
+Unknown: 0 (0%)
+RuntimeCompiler: 0 (0%)
+RuntimeLibrary: 44231119 (99%)
+    C_BeginSimulation: 44231119
+JS_Runtime: 0 (0%)
+Misc: 0 (0%)

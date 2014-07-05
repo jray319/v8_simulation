@@ -1,0 +1,29 @@
+Warning: unknown flag --init_new_space_size=65536.
+Try --help for options
+[9713]     5167 ms: Mark-sweep 0.9 (18.9) -> 0.8 (18.9) MB, 6 / 382.0 ms [Isolate::RequestGarbageCollection] [GC in old space requested].
+./benchmarks/jsbench-2012.1/twitter-firefox.js:454: TypeError: Cannot set property 'JSBNG__random' of undefined
+ow283489458.Math.JSBNG__random = f283489458_368;
+                               ^
+TypeError: Cannot set property 'JSBNG__random' of undefined
+    at ./benchmarks/jsbench-2012.1/twitter-firefox.js:454:32
+    at ./results/jsbench-2012.1_140704_025739/twitter-firefox/warmup.js:2:1
+
+./results/jsbench-2012.1_140704_025739/twitter-firefox/warmup.js:2: Error executing file
+load("./benchmarks/jsbench-2012.1/twitter-firefox.js");
+^
+
+[9713] Process starting.
+[9713] Thread 0 starting..
+[9713] Code cache flushed before transitioning to fast skip mode
+[9713] Thread 1 starting..
+[9713] Thread 2 starting..
+[9713] Thread 3 starting..
+[9713] Thread 4 starting..
+[9713] Thread 5 starting..
+[9713] Thread 0 finishing.
+[9713] Thread 1 finishing.
+[9713] Thread 2 finishing.
+[9713] Thread 3 finishing.
+[9713] Thread 4 finishing.
+[9713] Thread 5 finishing.
+[9713] Process finishing.

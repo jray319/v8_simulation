@@ -1,0 +1,30 @@
+Warning: unknown flag --init_new_space_size=65536.
+Try --help for options
+[9573]     5351 ms: Mark-sweep 0.8 (18.9) -> 0.7 (18.9) MB, 7 / 384.9 ms [Isolate::RequestGarbageCollection] [GC in old space requested].
+[9573]     6075 ms: Scavenge 1.7 (18.9) -> 0.8 (18.9) MB, 60.6 ms [Runtime::PerformGC].
+[9573]     6120 ms: Scavenge 1.7 (18.9) -> 0.8 (18.9) MB, 7.6 ms [Runtime::PerformGC].
+[9573]     6140 ms: Scavenge 1.7 (18.9) -> 0.8 (18.9) MB, 3.7 ms [Runtime::PerformGC].
+[9573]     6156 ms: Scavenge 1.7 (18.9) -> 0.8 (18.9) MB, 0.2 ms [Runtime::PerformGC].
+[9573]     6188 ms: Scavenge 1.7 (18.9) -> 0.8 (18.9) MB, 0.6 ms [Runtime::PerformGC].
+[9573]     6203 ms: Scavenge 1.7 (18.9) -> 0.8 (18.9) MB, 0.2 ms [Runtime::PerformGC].
+[9573]     6218 ms: Scavenge 1.7 (18.9) -> 0.8 (18.9) MB, 0.2 ms [Runtime::PerformGC].
+[9573]     6233 ms: Scavenge 1.7 (18.9) -> 0.8 (18.9) MB, 0.2 ms [Runtime::PerformGC].
+[9573]     6250 ms: Scavenge 1.7 (18.9) -> 0.8 (18.9) MB, 0.2 ms [Runtime::PerformGC].
+[9573]     6265 ms: Scavenge 1.7 (18.9) -> 0.8 (18.9) MB, 0.2 ms [Runtime::PerformGC].
+[9573]     6280 ms: Scavenge 1.7 (18.9) -> 0.8 (18.9) MB, 0.2 ms [Runtime::PerformGC].
+[9573]     6295 ms: Scavenge 1.7 (18.9) -> 0.8 (18.9) MB, 0.2 ms [Runtime::PerformGC].
+[9573]     6310 ms: Scavenge 1.7 (18.9) -> 0.8 (18.9) MB, 0.2 ms [Runtime::PerformGC].
+[9573]     6322 ms: Mark-sweep 0.8 (18.9) -> 0.8 (18.9) MB, 8.9 ms [Isolate::RequestGarbageCollection] [GC in old space requested].
+PROFILE BEGIN
+[9573] Process starting.
+[9573] Thread 0 starting..
+[9573] Code cache flushed before transitioning to fast skip mode
+[9573] Thread 1 starting..
+[9573] Thread 2 starting..
+[9573] Thread 3 starting..
+[9573] Thread 4 starting..
+[9573] Thread 5 starting..
+[9573] Code cache flushed before transitioning to simulation mode
+[9573] SIMULATION BEGIN (Thread 0)
+[9573] SIMULATION END (Thread 0)
+[9573] Process finishing.

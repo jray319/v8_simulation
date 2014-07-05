@@ -1,0 +1,19 @@
+Warning: unknown flag --init_new_space_size=65536.
+Try --help for options
+[9405]     5364 ms: Mark-sweep 0.8 (18.9) -> 0.7 (18.9) MB, 7 / 381.7 ms [Isolate::RequestGarbageCollection] [GC in old space requested].
+[9405]     5815 ms: Scavenge 1.5 (18.9) -> 0.9 (18.9) MB, 56.9 ms [Runtime::PerformGC].
+[9405]     5950 ms: Scavenge 1.4 (18.9) -> 0.9 (18.9) MB, 7.2 ms [Runtime::PerformGC].
+[9405]     6018 ms: Mark-sweep 1.2 (18.9) -> 0.7 (18.9) MB, 9.4 ms [Isolate::RequestGarbageCollection] [GC in old space requested].
+PROFILE BEGIN
+[9405] Process starting.
+[9405] Thread 0 starting..
+[9405] Code cache flushed before transitioning to fast skip mode
+[9405] Thread 1 starting..
+[9405] Thread 2 starting..
+[9405] Thread 3 starting..
+[9405] Thread 4 starting..
+[9405] Thread 5 starting..
+[9405] Code cache flushed before transitioning to simulation mode
+[9405] SIMULATION BEGIN (Thread 0)
+[9405] SIMULATION END (Thread 0)
+[9405] Process finishing.

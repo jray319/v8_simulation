@@ -1,0 +1,31 @@
+Warning: unknown flag --init_new_space_size=65536.
+Try --help for options
+[9700]     5225 ms: Mark-sweep 0.9 (18.9) -> 0.8 (18.9) MB, 6 / 388.9 ms [Isolate::RequestGarbageCollection] [GC in old space requested].
+[9700]    36536 ms: Scavenge 9.1 (28.0) -> 8.6 (28.0) MB, 96.4 ms [allocation failure].
+[9700]    47116 ms: Scavenge 10.6 (31.0) -> 10.2 (31.0) MB, 54.8 ms (+ 113.8 ms in 14 steps since last GC) [allocation failure].
+[9700]    52348 ms: Scavenge 11.3 (31.0) -> 10.9 (31.0) MB, 12.3 ms (+ 4.6 ms in 11 steps since last GC) [allocation failure].
+[9700]    54480 ms: Scavenge 12.6 (31.0) -> 11.5 (32.0) MB, 12.4 ms (+ 11.9 ms in 25 steps since last GC) [Runtime::PerformGC].
+[9700]    54805 ms: Mark-sweep 11.7 (32.0) -> 11.2 (32.0) MB, 63.0 ms (+ 132.1 ms in 53 steps since start of marking, biggest step 1.4 ms) [StackGuard GC request] [GC in old space requested].
+[9700]    57193 ms: Scavenge 13.2 (32.0) -> 11.8 (32.0) MB, 6.3 ms [Runtime::PerformGC].
+Time: 27850ms
+[9700]    58616 ms: Mark-sweep 12.1 (32.0) -> 11.3 (32.0) MB, 74.7 ms [Isolate::RequestGarbageCollection] [GC in old space requested].
+[9700]    98024 ms: Scavenge 21.2 (37.7) -> 19.1 (38.7) MB, 15.6 ms [Runtime::PerformGC].
+Time: 19969ms
+[9700]   101809 ms: Mark-sweep 22.0 (38.7) -> 19.1 (39.7) MB, 63.3 ms [Isolate::RequestGarbageCollection] [GC in old space requested].
+[9700]   137328 ms: Scavenge 28.1 (44.3) -> 25.9 (45.3) MB, 8.7 ms [Runtime::PerformGC].
+Time: 16436ms
+[9700]   140859 ms: Mark-sweep 29.0 (45.3) -> 25.6 (47.3) MB, 75.3 ms [Isolate::RequestGarbageCollection] [GC in old space requested].
+PROFILE BEGIN
+Time: 61100ms
+[9700] Process starting.
+[9700] Thread 0 starting..
+[9700] Code cache flushed before transitioning to fast skip mode
+[9700] Thread 1 starting..
+[9700] Thread 2 starting..
+[9700] Thread 3 starting..
+[9700] Thread 4 starting..
+[9700] Thread 5 starting..
+[9700] Code cache flushed before transitioning to simulation mode
+[9700] SIMULATION BEGIN (Thread 0)
+[9700] SIMULATION END (Thread 0)
+[9700] Process finishing.

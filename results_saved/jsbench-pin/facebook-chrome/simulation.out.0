@@ -1,0 +1,36 @@
+Warning: unknown flag --init_new_space_size=65536.
+Try --help for options
+[9658]     5280 ms: Mark-sweep 0.9 (18.9) -> 0.8 (18.9) MB, 7 / 393.1 ms [Isolate::RequestGarbageCollection] [GC in old space requested].
+[9658]     5949 ms: Mark-sweep 14.7 (33.2) -> 10.6 (31.2) MB, 61.0 ms (+ 97.3 ms in 2 steps since start of marking, biggest step 85.7 ms) [StackGuard GC request] [GC in old space requested].
+[9658]    16436 ms: Scavenge 16.3 (36.2) -> 15.9 (37.2) MB, 112.0 ms [allocation failure].
+[9658]    17160 ms: Scavenge 16.8 (37.2) -> 16.3 (37.2) MB, 9.1 ms [allocation failure].
+[9658]    17528 ms: Scavenge 17.1 (37.2) -> 16.9 (37.2) MB, 2.2 ms [allocation failure].
+[9658]    17539 ms: Scavenge 17.2 (37.2) -> 17.2 (37.2) MB, 6.1 ms [allocation failure].
+[9658]    17555 ms: Scavenge 18.6 (37.2) -> 17.7 (38.2) MB, 3.1 ms [Runtime::PerformGC].
+[9658]    18860 ms: Scavenge 19.8 (39.2) -> 18.7 (39.2) MB, 1.2 ms [allocation failure].
+[9658]    18866 ms: Scavenge 19.7 (39.2) -> 18.9 (39.2) MB, 2.0 ms [Runtime::PerformGC].
+Time: 11167ms
+[9658]    20497 ms: Mark-sweep 22.6 (39.2) -> 17.8 (39.2) MB, 43.9 ms (+ 32.2 ms in 19 steps since start of marking, biggest step 13.6 ms) [idle notification: finalize incremental] [GC in old space requested].
+[9658]    20683 ms: Mark-sweep 17.9 (39.2) -> 17.1 (38.2) MB, 72.4 ms [Isolate::RequestGarbageCollection] [GC in old space requested].
+[9658]    26828 ms: Scavenge 30.9 (47.5) -> 28.6 (47.5) MB, 3.1 ms [Runtime::PerformGC].
+[9658]    27843 ms: Scavenge 31.4 (48.5) -> 29.7 (49.5) MB, 2.5 ms [Runtime::PerformGC].
+Time: 6052ms
+[9658]    29035 ms: Mark-sweep 33.2 (49.5) -> 28.8 (49.5) MB, 22.0 ms [Isolate::RequestGarbageCollection] [GC in old space requested].
+[9658]    34792 ms: Scavenge 46.3 (59.9) -> 40.2 (59.9) MB, 6.7 ms [allocation failure].
+Time: 3826ms
+[9658]    35411 ms: Mark-sweep 41.9 (60.9) -> 39.7 (60.9) MB, 26.5 ms [Isolate::RequestGarbageCollection] [GC in old space requested].
+PROFILE BEGIN
+[9658]    61498 ms: Scavenge 57.2 (70.2) -> 51.1 (70.2) MB, 35 / 1131.4 ms [allocation failure].
+Time: 27689ms
+[9658] Process starting.
+[9658] Thread 0 starting..
+[9658] Code cache flushed before transitioning to fast skip mode
+[9658] Thread 1 starting..
+[9658] Thread 2 starting..
+[9658] Thread 3 starting..
+[9658] Thread 4 starting..
+[9658] Thread 5 starting..
+[9658] Code cache flushed before transitioning to simulation mode
+[9658] SIMULATION BEGIN (Thread 0)
+[9658] SIMULATION END (Thread 0)
+[9658] Process finishing.

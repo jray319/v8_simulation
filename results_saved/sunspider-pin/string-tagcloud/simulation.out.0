@@ -1,0 +1,22 @@
+Warning: unknown flag --init_new_space_size=65536.
+Try --help for options
+[9622]     5342 ms: Mark-sweep 0.8 (18.9) -> 0.7 (18.9) MB, 7 / 381.0 ms [Isolate::RequestGarbageCollection] [GC in old space requested].
+[9622]     7664 ms: Scavenge 2.2 (19.9) -> 1.8 (19.9) MB, 91.3 ms [Runtime::PerformGC].
+[9622]     8557 ms: Scavenge 2.7 (19.9) -> 2.2 (19.9) MB, 8.9 ms [Runtime::PerformGC].
+[9622]     8715 ms: Scavenge 3.0 (19.9) -> 2.7 (19.9) MB, 9.7 ms [allocation failure].
+[9622]     8965 ms: Scavenge 4.2 (19.9) -> 3.1 (20.9) MB, 8.5 ms [Runtime::PerformGC].
+[9622]     9072 ms: Scavenge 4.8 (20.9) -> 3.7 (20.9) MB, 5.4 ms [Runtime::PerformGC].
+[9622]     9175 ms: Mark-sweep 5.2 (20.9) -> 2.5 (20.9) MB, 20.8 ms [Isolate::RequestGarbageCollection] [GC in old space requested].
+PROFILE BEGIN
+[9622] Process starting.
+[9622] Thread 0 starting..
+[9622] Code cache flushed before transitioning to fast skip mode
+[9622] Thread 1 starting..
+[9622] Thread 2 starting..
+[9622] Thread 3 starting..
+[9622] Thread 4 starting..
+[9622] Thread 5 starting..
+[9622] Code cache flushed before transitioning to simulation mode
+[9622] SIMULATION BEGIN (Thread 0)
+[9622] SIMULATION END (Thread 0)
+[9622] Process finishing.

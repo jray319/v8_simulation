@@ -1,0 +1,64 @@
+Warning: unknown flag --init_new_space_size=65536.
+Try --help for options
+[9318]     8346 ms: Mark-sweep 0.8 (18.9) -> 0.7 (18.9) MB, 11 / 582.1 ms [Isolate::RequestGarbageCollection] [GC in old space requested].
+[9318]    12107 ms: Scavenge 1.8 (18.9) -> 0.8 (18.9) MB, 111.3 ms [Runtime::PerformGC].
+[9318]    12252 ms: Scavenge 1.8 (18.9) -> 0.8 (18.9) MB, 18.9 ms [Runtime::PerformGC].
+[9318]    12467 ms: Scavenge 1.8 (18.9) -> 0.8 (18.9) MB, 1.0 ms [Runtime::PerformGC].
+[9318]    12504 ms: Scavenge 1.8 (18.9) -> 0.8 (18.9) MB, 0.4 ms [allocation failure].
+[9318]    12662 ms: Scavenge 1.8 (18.9) -> 0.8 (18.9) MB, 0.5 ms [Runtime::PerformGC].
+[9318]    12681 ms: Scavenge 1.8 (18.9) -> 0.8 (18.9) MB, 0.3 ms [Runtime::PerformGC].
+[9318]    12708 ms: Scavenge 1.8 (18.9) -> 0.8 (18.9) MB, 6.6 ms [Runtime::PerformGC].
+[9318]    12729 ms: Scavenge 1.8 (18.9) -> 0.8 (18.9) MB, 0.4 ms [Runtime::PerformGC].
+[9318]    12814 ms: Scavenge 1.8 (18.9) -> 0.8 (18.9) MB, 2.2 ms [Runtime::PerformGC].
+[9318]    12884 ms: Scavenge 1.8 (18.9) -> 0.8 (18.9) MB, 0.8 ms [Runtime::PerformGC].
+[9318]    12898 ms: Scavenge 1.8 (18.9) -> 0.8 (18.9) MB, 0.3 ms [Runtime::PerformGC].
+[9318]    12912 ms: Scavenge 1.8 (18.9) -> 0.8 (18.9) MB, 0.3 ms [Runtime::PerformGC].
+[9318]    12926 ms: Scavenge 1.8 (18.9) -> 0.8 (18.9) MB, 0.3 ms [Runtime::PerformGC].
+[9318]    12939 ms: Scavenge 1.8 (18.9) -> 0.8 (18.9) MB, 0.3 ms [Runtime::PerformGC].
+[9318]    12953 ms: Scavenge 1.8 (18.9) -> 0.8 (18.9) MB, 0.3 ms [Runtime::PerformGC].
+[9318]    13084 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.4 ms [Runtime::PerformGC].
+[9318]    13106 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.4 ms [Runtime::PerformGC].
+[9318]    13176 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.3 ms [allocation failure].
+[9318]    13195 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.3 ms [Runtime::PerformGC].
+[9318]    13216 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.3 ms [Runtime::PerformGC].
+[9318]    13286 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.3 ms [Runtime::PerformGC].
+[9318]    13302 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.4 ms [Runtime::PerformGC].
+[9318]    13319 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.3 ms [Runtime::PerformGC].
+[9318]    13335 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.3 ms [Runtime::PerformGC].
+[9318]    13432 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.3 ms [Runtime::PerformGC].
+[9318]    13446 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.3 ms [Runtime::PerformGC].
+[9318]    13460 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.3 ms [Runtime::PerformGC].
+[9318]    13474 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.3 ms [Runtime::PerformGC].
+[9318]    13488 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.3 ms [Runtime::PerformGC].
+[9318]    13501 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.3 ms [Runtime::PerformGC].
+[9318]    13515 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.3 ms [Runtime::PerformGC].
+[9318]    13635 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.4 ms [Runtime::PerformGC].
+[9318]    13658 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.4 ms [Runtime::PerformGC].
+[9318]    13700 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.3 ms [Runtime::PerformGC].
+[9318]    13720 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.3 ms [Runtime::PerformGC].
+[9318]    13741 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.4 ms [Runtime::PerformGC].
+[9318]    13800 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.3 ms [Runtime::PerformGC].
+[9318]    13816 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.3 ms [Runtime::PerformGC].
+[9318]    13833 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.3 ms [Runtime::PerformGC].
+[9318]    13850 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.3 ms [Runtime::PerformGC].
+[9318]    13947 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.3 ms [Runtime::PerformGC].
+[9318]    13960 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.3 ms [Runtime::PerformGC].
+[9318]    13973 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.3 ms [Runtime::PerformGC].
+[9318]    13988 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.3 ms [Runtime::PerformGC].
+[9318]    14001 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.3 ms [Runtime::PerformGC].
+[9318]    14024 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.3 ms [Runtime::PerformGC].
+[9318]    14037 ms: Scavenge 1.8 (18.9) -> 0.9 (18.9) MB, 0.5 ms [Runtime::PerformGC].
+[9318]    14073 ms: Mark-sweep 1.1 (18.9) -> 0.8 (18.9) MB, 17.9 ms [Isolate::RequestGarbageCollection] [GC in old space requested].
+PROFILE BEGIN
+[9318] Process starting.
+[9318] Thread 0 starting..
+[9318] Code cache flushed before transitioning to fast skip mode
+[9318] Thread 1 starting..
+[9318] Thread 2 starting..
+[9318] Thread 3 starting..
+[9318] Thread 4 starting..
+[9318] Thread 5 starting..
+[9318] Code cache flushed before transitioning to simulation mode
+[9318] SIMULATION BEGIN (Thread 0)
+[9318] SIMULATION END (Thread 0)
+[9318] Process finishing.

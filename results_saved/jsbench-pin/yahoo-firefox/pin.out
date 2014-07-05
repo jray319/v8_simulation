@@ -1,0 +1,17 @@
+UsefulWork: 0 (0%)
+    UsefulWork: 0
+CrankshaftChecks: 0 (0%)
+FullCompilerChecks: 0 (0%)
+IC_Runtime: 10118496 (43%)
+    IC_LoadIC_Miss: 6701565
+    IC_KeyedLoadIC_MissForceGeneric: 2679185
+    IC_KeyedLoadIC_Miss: 479798
+    IC_StoreIC_ArrayLength: 160969
+    IC_KeyedLoadPropertyWithInterceptor: 94457
+    IC_CallIC_Miss: 2522
+Unknown: 0 (0%)
+RuntimeCompiler: 0 (0%)
+RuntimeLibrary: 12904479 (56%)
+    C_BeginSimulation: 12904479
+JS_Runtime: 0 (0%)
+Misc: 0 (0%)
