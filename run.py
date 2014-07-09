@@ -23,6 +23,9 @@ def prepare_d8_args(default_args, benchmark_suite_dir, test, test_dir, args):
   if args.sampling:
     v8_log = os.path.join(test_dir, args.v8_log)
     ret += ['--prof', '--prof_lazy', '--log_snapshot_positions', '--logfile', v8_log]
+  if args.vm_time:
+    v8_log = os.path.join(test_dir, args.v8_log)
+    ret += ['--logfile', v8_log]
   # Prepare files.
   test_js = os.path.join(benchmark_suite_dir, test + '.js')
   if args.reload:
@@ -45,6 +48,7 @@ def prepare_d8_args(default_args, benchmark_suite_dir, test, test_dir, args):
         f.write('%ProfilerResume();\n')
       if args.vm_time:
         f.write('%ResetVMTimer();\n')
+        f.write('%StartLogger();\n')
       f.write(args.sim_func + '();\n')
       if args.pin:
         f.write('%EndSimulation();\n')
@@ -73,6 +77,7 @@ def prepare_d8_args(default_args, benchmark_suite_dir, test, test_dir, args):
         f.write('%ProfilerResume();\n')
       if args.vm_time:
         f.write('%ResetVMTimer();\n')
+        f.write('%StartLogger();\n')
       f.write(args.sim_func + '();\n')
       if args.pin:
         f.write('%EndSimulation();\n')
