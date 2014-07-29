@@ -13,10 +13,13 @@ V8_STATES = ('JS',
              'EXTERNAL',
              'IDLE')
 
+V8_STATES_PLOT = ('IDLE', 'EXTERNAL', 'JS', 'IC_RUNTIME', 'RUNTIME', 'COMPILER', 'GC', 'OTHER')
+
 class Plotter():
   def __init__(self, v8_log_file):
     self.v8_log_file = v8_log_file
     self.num_samples = 0
+    self.sampling_period = 0
     self.data = {'IDLE': [],
                  'EXTERNAL': [],
                  'JS': [],
@@ -28,7 +31,9 @@ class Plotter():
 
   def plot(self):
     self.analyze_simple()
+    self.scale(100)
     fig, ax = plt.subplots()
+    fig.set_size_inches(self.num_samples / 2, 5)
     x = np.arange(self.num_samples)
     stack_collection = ax.stackplot(x,
                                     self.data['IDLE'],
@@ -43,16 +48,18 @@ class Plotter():
     plt.xlim(xmin = 0, xmax = self.num_samples - 1)
     plt.ylim(ymin = 0, ymax = self.sampling_period)
     # Make room for the legend.
-    box = ax.get_position()
-    ax.set_position([box.x0, box.y0, box.width * 0.75, box.height])
+    #box = ax.get_position()
+    #ax.set_position([box.x0, box.y0, box.width * 0.75, box.height])
     # Draw the legend.
     legend_rects = [plt.Rectangle((0, 0), 1, 1, fc = s.get_facecolor()[0]) for s in reversed(stack_collection)]
+    total_ticks = self.num_samples * self.sampling_period
     ax.legend(legend_rects,
-              reversed(['IDLE', 'EXTERNAL', 'JS', 'IC_RUNTIME', 'RUNTIME', 'COMPILER', 'GC', 'OTHER']),
+              [state + ' (' + str(100 * sum(self.data[state]) / total_ticks) + '%)' for state in reversed(V8_STATES_PLOT)],
               loc = 'center left',
               bbox_to_anchor=(1, 0.5))
     # Finally draw the plot.
-    plt.show()
+    #plt.tight_layout()
+    plt.savefig('plot.png')
 
   def analyze(self):
     with open(self.v8_log_file, 'r') as f:
@@ -96,8 +103,6 @@ class Plotter():
           failed_lines += 1
           continue
         self.sampling_period = int(tokens[1])
-        if int(tokens[8]) == self.sampling_period:
-          continue
         self.num_samples += 1
         for i in range(0, len(V8_STATES)):
           key = V8_STATES[i]
@@ -105,6 +110,18 @@ class Plotter():
             self.data[V8_STATES[i]].append(int(tokens[i + 2]))
     print str(self.num_samples) + ' samples analyzed.'
     print str(failed_lines) + ' samples failed.'
+
+  def scale(self, factor):
+    self.num_samples /= factor
+    self.sampling_period *= factor
+    for i in range(0, len(V8_STATES)):
+      for j in range(0, self.num_samples):
+        temp = 0
+        for k in range(0, factor):
+          temp += self.data[V8_STATES[i]][j * factor + k]
+        self.data[V8_STATES[i]][j] = temp
+      self.data[V8_STATES[i]] = self.data[V8_STATES[i]][:self.num_samples]
+
 
 
 if __name__ == '__main__':
