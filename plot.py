@@ -41,77 +41,61 @@ class Plotter():
     self.data_external = {key: [] for key in EXTERNAL_DETAILS}
 
   def plot(self):
+    # Read events.
     self.read_simple_events()
     self.read_external_events()
-    print self.data_external
     self.scale(self.scale_factor)
-    # Set the plot size
+    
+    # Set the plot size.
     fig = plt.figure()
     grid_size_x = 2
     grid_size_y = self.num_simple_events / 2 + 4
     fig.set_size_inches(grid_size_y, grid_size_x * 5)
-    #
-    # Plot simple events
-    #
+    
+    # Plot simple events.
     plt.subplot2grid((grid_size_x, grid_size_y), (0, 0), colspan = grid_size_y - 4)
     x = np.arange(self.num_simple_events)
-    colors = plt.cm.BuPu(np.linspace(0, 0.5, len(V8_STATES_PLOT)))
+    # Prepare colors.
+    colors = self.get_colors(len(V8_STATES_PLOT))
     plt.stackplot(x, [self.data[key] for key in V8_STATES_PLOT], colors = colors)
     # Set the axis limits.
     plt.xlim(xmin = 0, xmax = self.num_simple_events - 1)
     plt.ylim(ymin = 0, ymax = self.sampling_period)
-    # Legend
-    plt.subplot2grid((grid_size_x, grid_size_y), (0, grid_size_y - 2), colspan = 2)
-    plt.table(cellText = [[0] for key in V8_STATES_PLOT],
-              rowLabels = V8_STATES_PLOT,
-              rowColours = colors,
+    # Draw legend.
+    plt.subplot2grid((grid_size_x, grid_size_y), (0, grid_size_y - 1))
+    total_ticks = self.num_simple_events * self.sampling_period
+    plt.table(cellText = [[str(100 * sum(self.data[key]) / total_ticks) + ' %'] for key in reversed(V8_STATES_PLOT)],
+              rowLabels = V8_STATES_PLOT[::-1],
+              rowColours = colors[::-1],
               colLabels = ['Ticks'],
               loc = 'center')
     plt.xticks([])
     plt.yticks([])
-    #
-    # Plot external events
-    #
+    
+    # Plot external events.
     plt.subplot2grid((grid_size_x, grid_size_y), (1, 0), colspan = grid_size_y - 4)
     x = np.arange(self.num_external_events)
-    plt.stackplot(x, [self.data_external[key] for key in EXTERNAL_DETAILS])
+    # Prepare colors.
+    colors = self.get_colors(len(EXTERNAL_DETAILS))
+    plt.stackplot(x, [self.data_external[key] for key in EXTERNAL_DETAILS], colors = colors)
     # Set the axis limits.
     plt.xlim(xmin = 0, xmax = self.num_external_events - 1)
     plt.ylim(ymin = 0, ymax = self.sampling_period)
+    # Draw legend.
+    plt.subplot2grid((grid_size_x, grid_size_y), (1, grid_size_y - 1))
+    total_ticks = self.num_external_events * self.sampling_period
+    plt.table(cellText = [[str(100 * sum(self.data_external[key]) / total_ticks) + ' %'] for key in reversed(EXTERNAL_DETAILS)],
+              rowLabels = EXTERNAL_DETAILS[::-1],
+              rowColours = colors[::-1],
+              colLabels = ['Ticks'],
+              loc = 'center')
+    plt.xticks([])
+    plt.yticks([])
+    
     # Finally draw the plot.
     plt.tight_layout()
-    plt.show()
-    return
-    # Make room for the legend.
-    #box = ax.get_position()
-    #ax.set_position([box.x0, box.y0, box.width * 0.75, box.height])
-    # Draw the legend.
-    legend_rects = [plt.Rectangle((0, 0), 1, 1, fc = s.get_facecolor()[0]) for s in reversed(stack_collection)]
-    total_ticks = self.num_simple_events * self.sampling_period
-    ax.legend(legend_rects,
-              [state + ' (' + str(100 * sum(self.data[state]) / total_ticks) + '%)' for state in reversed(V8_STATES_PLOT)],
-              loc = 'center left',
-              bbox_to_anchor=(1, 0.5))
-    # Plot external events
-    plt.subplot(1, 2, 2)
-    fig.set_size_inches(self.num_simple_events / 2, 5)
-    x = np.arange(self.num_simple_events)
-    stack_collection = ax.stackplot(x,
-                                    self.data['IDLE'],
-                                    self.data['EXTERNAL'],
-                                    self.data['JS'],
-                                    self.data['IC_RUNTIME'],
-                                    self.data['RUNTIME'],
-                                    self.data['COMPILER'],
-                                    self.data['GC'],
-                                    self.data['OTHER'])
-    # Set the axis limits.
-    plt.xlim(xmin = 0, xmax = self.num_simple_events - 1)
-    plt.ylim(ymin = 0, ymax = self.sampling_period)
-    # Finally draw the plot.
-    #plt.tight_layout()
+    #plt.show()
     plt.savefig('plot.png')
-    plt.show()
 
   def analyze(self):
     with open(self.v8_log_file, 'r') as f:
@@ -189,6 +173,13 @@ class Plotter():
           temp += self.data[V8_STATES[i]][j * factor + k]
         self.data[V8_STATES[i]][j] = temp
       self.data[V8_STATES[i]] = self.data[V8_STATES[i]][:self.num_simple_events]
+
+  def get_colors(self, num):
+    colors = []
+    cm = plt.get_cmap('Set1')
+    for i in range(num):
+      colors.append(cm(float(i) / num))
+    return colors
 
 
 if __name__ == '__main__':
