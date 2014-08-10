@@ -19,7 +19,7 @@ EXTERNAL_DETAILS = ("InvokeAccessorGetterCallback", "InvokeFunctionCallback",
                     "PostGarbageCollectionProcessing",
                     "Heap::PerformGarbageCollection_1", "Heap::PerformGarbageCollection_2",
                     "Isolate::ReportFailedAccessCheck", "Isolate::MayNamedAccess", "Isolate::MayIndexedAccess",
-                    "CodeGenerationFromStringsAllowed")
+                    "CodeGenerationFromStringsAllowed", "API")
 
 V8_STATES_PLOT = ('IDLE', 'EXTERNAL', 'JS', 'IC_RUNTIME', 'RUNTIME', 'COMPILER', 'GC', 'OTHER')
 
@@ -83,7 +83,9 @@ class Plotter():
     plt.ylim(ymin = 0, ymax = self.sampling_period)
     # Draw legend.
     plt.subplot2grid((grid_size_x, grid_size_y), (1, grid_size_y - 1))
-    total_ticks = self.num_external_events * self.sampling_period
+    total_ticks = 0
+    for key in EXTERNAL_DETAILS:
+      total_ticks += sum(self.data_external[key])
     plt.table(cellText = [[str(100 * sum(self.data_external[key]) / total_ticks) + ' %'] for key in reversed(EXTERNAL_DETAILS)],
               rowLabels = EXTERNAL_DETAILS[::-1],
               rowColours = colors[::-1],
@@ -94,8 +96,8 @@ class Plotter():
     
     # Finally draw the plot.
     plt.tight_layout()
-    #plt.show()
-    plt.savefig('plot.png')
+    plt.show()
+    #plt.savefig('plot.png')
 
   def analyze(self):
     with open(self.v8_log_file, 'r') as f:
@@ -164,8 +166,9 @@ class Plotter():
     print str(failed_lines) + ' samples failed.'
 
   def scale(self, factor):
-    self.num_simple_events /= factor
     self.sampling_period *= factor
+    # Scale simple events.
+    self.num_simple_events /= factor
     for i in range(0, len(V8_STATES)):
       for j in range(0, self.num_simple_events):
         temp = 0
@@ -173,6 +176,16 @@ class Plotter():
           temp += self.data[V8_STATES[i]][j * factor + k]
         self.data[V8_STATES[i]][j] = temp
       self.data[V8_STATES[i]] = self.data[V8_STATES[i]][:self.num_simple_events]
+
+    # Scale external events.
+    self.num_external_events /= factor
+    for i in range(0, len(EXTERNAL_DETAILS)):
+      for j in range(0, self.num_external_events):
+        temp = 0
+        for k in range(0, factor):
+          temp += self.data_external[EXTERNAL_DETAILS[i]][j * factor + k]
+        self.data_external[EXTERNAL_DETAILS[i]][j] = temp
+      self.data_external[EXTERNAL_DETAILS[i]] = self.data_external[EXTERNAL_DETAILS[i]][:self.num_external_events]
 
   def get_colors(self, num):
     colors = []
