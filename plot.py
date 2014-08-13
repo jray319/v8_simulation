@@ -14,7 +14,7 @@ V8_STATES = ('JS',
              'IDLE')
 
 EXTERNAL_DETAILS = ("InvokeAccessorGetterCallback", "InvokeFunctionCallback",
-                    "FunctionCallbackArguments::Call", "WRITE_CALL_0", "WRITE_CALL_1", "WRITE_CALL_2", "WRITE_CALL_2_VOID",
+                    "FunctionCallback", "PropertyCallback_0", "PropertyCallback_1", "PropertyCallback_2", "PropertyCallback_2_VOID",
                     "StackGuard::InvokeInterruptCallback",
                     "PostGarbageCollectionProcessing",
                     "Heap::PerformGarbageCollection_1", "Heap::PerformGarbageCollection_2",
@@ -42,8 +42,9 @@ class Plotter():
 
   def plot(self):
     # Read events.
-    self.read_simple_events()
-    self.read_external_events()
+    #self.read_simple_events()
+    #self.read_external_events()
+    self.read_events()
     self.scale(self.scale_factor)
     
     # Set the plot size.
@@ -165,6 +166,45 @@ class Plotter():
     print str(self.num_external_events) + ' samples analyzed.'
     print str(failed_lines) + ' samples failed.'
 
+  def read_events(self):
+    failed_lines = 0
+    with open(self.v8_log_file, 'r') as f:
+      state = 0
+      simple_line = ''
+      for line in f:
+        tokens = line.rstrip('\n').split(',')
+        if state == 0:
+          if not line.startswith('VMTimerEventSimple'):
+            state = 0
+          elif len(tokens) != 10: 
+            failed_lines += 1
+            state = 1
+          else:
+            simple_line = line
+            state = 2
+        elif state == 1:
+          state = 0
+        elif state == 2:
+          if len(tokens) != 21 or not line.startswith('VMTimerEventExternal'):
+            failed_lines += 1
+            state = 0
+          else:
+            simple_tokens = simple_line.rstrip('\n').split(',')
+            self.sampling_period = int(simple_tokens[1])
+            self.num_simple_events += 1
+            for i in range(0, len(V8_STATES)):
+              key = V8_STATES[i]
+              if key in self.data:
+                self.data[V8_STATES[i]].append(int(simple_tokens[i + 2]))
+            self.num_external_events += 1
+            for i in range(0, len(EXTERNAL_DETAILS)):
+              key = EXTERNAL_DETAILS[i]
+              if key in self.data_external:
+                self.data_external[EXTERNAL_DETAILS[i]].append(int(tokens[i + 1]))
+            state = 0
+    print str(self.num_simple_events + self.num_external_events) + ' samples analyzed.'
+    print str(failed_lines) + ' samples failed.'
+
   def scale(self, factor):
     self.sampling_period *= factor
     # Scale simple events.
@@ -186,6 +226,18 @@ class Plotter():
           temp += self.data_external[EXTERNAL_DETAILS[i]][j * factor + k]
         self.data_external[EXTERNAL_DETAILS[i]][j] = temp
       self.data_external[EXTERNAL_DETAILS[i]] = self.data_external[EXTERNAL_DETAILS[i]][:self.num_external_events]
+
+    for i in range(0, self.num_simple_events):
+      #print str(self.data['EXTERNAL'][i])
+      sum = 0
+      for j in range(0, len(EXTERNAL_DETAILS)):
+        sum += self.data_external[EXTERNAL_DETAILS[j]][i]
+      #print (str(sum))
+      if sum != self.data['EXTERNAL'][i]:
+        print 'FUCK'
+        #print str(self.data['EXTERNAL'][i])
+        #print (str(sum))
+    #sys.exit(0)
 
   def get_colors(self, num):
     colors = []
