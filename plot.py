@@ -13,13 +13,40 @@ V8_STATES = ('JS',
              'EXTERNAL',
              'IDLE')
 
-EXTERNAL_DETAILS = ("InvokeAccessorGetterCallback", "InvokeFunctionCallback",
-                    "FunctionCallback", "PropertyCallback_0", "PropertyCallback_1", "PropertyCallback_2", "PropertyCallback_2_VOID",
-                    "StackGuard::InvokeInterruptCallback",
-                    "PostGarbageCollectionProcessing",
-                    "Heap::PerformGarbageCollection_1", "Heap::PerformGarbageCollection_2",
-                    "Isolate::ReportFailedAccessCheck", "Isolate::MayNamedAccess", "Isolate::MayIndexedAccess",
-                    "CodeGenerationFromStringsAllowed", "API")
+EXTERNAL_DETAILS = (
+  # api.cc
+  "INVOKE_ACCESSOR_GETTER_CALLBACK",
+  "INVOKE_FUNCTION_CALLBACK",
+  # execution.cc
+  "INVOKE_INTERRUPT_CALLBACK",
+  # global-handles.cc
+  "POST_GC",
+  # heap.cc
+  "GC_PROLOGUE_CALLBACK",
+  "GC_EPILOGUE_CALLBACK",
+  # isolate.cc
+  "REPORT_FAILED_ACCESS_CHECK",
+  "NAMED_ACCESS_CALLBACK",
+  "INDEXED_ACCESS_CALLBACK",
+  # runtime.cc
+  "ALLOW_CODEGEN_CALLBACK",
+  # log.cc
+  "API_FUNCTION",
+  "API_GETTER",
+  # arguments.cc
+  "FUNCTION_CALLBACK",
+  # arguments.h
+  "INDEXED_PROPERTY_ENUMERATOR_CALLBACK",
+  "ACCESSOR_GETTER_CALLBACK",
+  "NAMED_PROPERTY_QUERY_CALLBACK",
+  "NAMED_PROPERTY_DELETER_CALLBACK",
+  "INDEXED_PROPERTY_GETTER_CALLBACK",
+  "INDEXED_PROPERTY_QUERY_CALLBACK",
+  "INDEXED_PROPERTY_DELETER_CALLBACK",
+  "NAMED_PROPERTY_SETTER_CALLBACK",
+  "INDEXED_PROPERTY_SETTER_CALLBACK",
+  "ACCESSOR_SETTER_CALLBACK"
+  )
 
 V8_STATES_PLOT = ('IDLE', 'EXTERNAL', 'JS', 'IC_RUNTIME', 'RUNTIME', 'COMPILER', 'GC', 'OTHER')
 
@@ -39,6 +66,7 @@ class Plotter():
                  'GC': [],
                  'OTHER': []}
     self.data_external = {key: [] for key in EXTERNAL_DETAILS}
+    self.num_external = {key: [] for key in EXTERNAL_DETAILS}
 
   def plot(self):
     # Read events.
@@ -48,13 +76,14 @@ class Plotter():
     self.scale(self.scale_factor)
     
     # Set the plot size.
-    fig = plt.figure()
-    grid_size_x = 2
-    grid_size_y = self.num_simple_events / 2 + 4
-    fig.set_size_inches(grid_size_y, grid_size_x * 5)
-    
+    grid_row = 2
+    grid_fig_col = self.num_simple_events / 2
+    grid_legend_col = 8
+    grid_col = grid_fig_col + grid_legend_col
+    fig = plt.figure(figsize = (grid_col, grid_row * 6))
+
     # Plot simple events.
-    plt.subplot2grid((grid_size_x, grid_size_y), (0, 0), colspan = grid_size_y - 4)
+    plt.subplot2grid((grid_row, grid_col), (0, 0), colspan = grid_fig_col)
     x = np.arange(self.num_simple_events)
     # Prepare colors.
     colors = self.get_colors(len(V8_STATES_PLOT))
@@ -63,7 +92,7 @@ class Plotter():
     plt.xlim(xmin = 0, xmax = self.num_simple_events - 1)
     plt.ylim(ymin = 0, ymax = self.sampling_period)
     # Draw legend.
-    plt.subplot2grid((grid_size_x, grid_size_y), (0, grid_size_y - 1))
+    plt.subplot2grid((grid_row, grid_col), (0, grid_col - 1))
     total_ticks = self.num_simple_events * self.sampling_period
     plt.table(cellText = [[str(100 * sum(self.data[key]) / total_ticks) + ' %'] for key in reversed(V8_STATES_PLOT)],
               rowLabels = V8_STATES_PLOT[::-1],
@@ -74,7 +103,7 @@ class Plotter():
     plt.yticks([])
     
     # Plot external events.
-    plt.subplot2grid((grid_size_x, grid_size_y), (1, 0), colspan = grid_size_y - 4)
+    plt.subplot2grid((grid_row, grid_col), (1, 0), colspan = grid_fig_col)
     x = np.arange(self.num_external_events)
     # Prepare colors.
     colors = self.get_colors(len(EXTERNAL_DETAILS))
@@ -83,14 +112,14 @@ class Plotter():
     plt.xlim(xmin = 0, xmax = self.num_external_events - 1)
     plt.ylim(ymin = 0, ymax = self.sampling_period)
     # Draw legend.
-    plt.subplot2grid((grid_size_x, grid_size_y), (1, grid_size_y - 1))
+    plt.subplot2grid((grid_row, grid_col), (1, grid_col - 3), colspan = 3)
     total_ticks = 0
     for key in EXTERNAL_DETAILS:
       total_ticks += sum(self.data_external[key])
-    plt.table(cellText = [[str(100 * sum(self.data_external[key]) / total_ticks) + ' %'] for key in reversed(EXTERNAL_DETAILS)],
+    plt.table(cellText = [[str(100 * sum(self.data_external[key]) / total_ticks) + ' %', str(sum(self.num_external[key]))] for key in reversed(EXTERNAL_DETAILS)],
               rowLabels = EXTERNAL_DETAILS[::-1],
               rowColours = colors[::-1],
-              colLabels = ['Ticks'],
+              colLabels = ['Ticks', '# of Times'],
               loc = 'center')
     plt.xticks([])
     plt.yticks([])
@@ -155,14 +184,15 @@ class Plotter():
     with open(self.v8_log_file, 'r') as f:
       for line in f:
         tokens = line.rstrip('\n').split(',')
-        if len(tokens) != 21 or not line.startswith('VMTimerEventExternal'):
+        if len(tokens) != 2 * len(EXTERNAL_DETAILS) + 1 or not line.startswith('VMTimerEventExternal'):
           failed_lines += 1
           continue
         self.num_external_events += 1
         for i in range(0, len(EXTERNAL_DETAILS)):
           key = EXTERNAL_DETAILS[i]
           if key in self.data_external:
-            self.data_external[EXTERNAL_DETAILS[i]].append(int(tokens[i + 1]))
+            self.data_external[EXTERNAL_DETAILS[i]].append(int(tokens[2 * i + 1]))
+            self.num_external[EXTERNAL_DETAILS[i]].append(int(tokens[2 * (i + 1)]))
     print str(self.num_external_events) + ' samples analyzed.'
     print str(failed_lines) + ' samples failed.'
 
@@ -185,7 +215,7 @@ class Plotter():
         elif state == 1:
           state = 0
         elif state == 2:
-          if len(tokens) != 21 or not line.startswith('VMTimerEventExternal'):
+          if len(tokens) != 2 * len(EXTERNAL_DETAILS) + 1 or not line.startswith('VMTimerEventExternal'):
             failed_lines += 1
             state = 0
           else:
@@ -200,7 +230,8 @@ class Plotter():
             for i in range(0, len(EXTERNAL_DETAILS)):
               key = EXTERNAL_DETAILS[i]
               if key in self.data_external:
-                self.data_external[EXTERNAL_DETAILS[i]].append(int(tokens[i + 1]))
+                self.data_external[EXTERNAL_DETAILS[i]].append(int(tokens[2 * i + 1]))
+                self.num_external[EXTERNAL_DETAILS[i]].append(int(tokens[2 * (i + 1)]))
             state = 0
     print str(self.num_simple_events + self.num_external_events) + ' samples analyzed.'
     print str(failed_lines) + ' samples failed.'
@@ -222,10 +253,14 @@ class Plotter():
     for i in range(0, len(EXTERNAL_DETAILS)):
       for j in range(0, self.num_external_events):
         temp = 0
+        temp_num = 0
         for k in range(0, factor):
           temp += self.data_external[EXTERNAL_DETAILS[i]][j * factor + k]
+          temp_num += self.num_external[EXTERNAL_DETAILS[i]][j * factor + k]
         self.data_external[EXTERNAL_DETAILS[i]][j] = temp
+        self.num_external[EXTERNAL_DETAILS[i]][j] = temp_num
       self.data_external[EXTERNAL_DETAILS[i]] = self.data_external[EXTERNAL_DETAILS[i]][:self.num_external_events]
+      self.num_external[EXTERNAL_DETAILS[i]] = self.num_external[EXTERNAL_DETAILS[i]][:self.num_external_events]
 
     for i in range(0, self.num_simple_events):
       #print str(self.data['EXTERNAL'][i])
