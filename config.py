@@ -3,7 +3,7 @@ import os
 # Custom modules
 import local_config
 
-D8 = os.path.join(local_config.V8_ROOT, 'out/ia32.release/d8')
+D8 = os.path.join(local_config.V8_ROOT, 'out/x64.release/d8')
 D8_ARGS = ['--allow-natives-syntax', '--expose_gc', '--nocrankshaft']
 D8_ARGS += ['--init_new_space_size=65536', '--max_new_space_size=65536']
 D8_ARGS += ['--object_literal_max_key=1000', '--fast_properties_max_key=1000']
