@@ -31,10 +31,11 @@ EXTERNAL_DETAILS = (
   # runtime.cc
   "ALLOW_CODEGEN_CALLBACK",
   # log.cc
-  "API_FUNCTION",
-  "API_GETTER",
+  "External Function (Call Optimization)",#"API_FUNCTION",
+  "Accessor Getter (Call Optimization)",#"API_GETTER",
   # arguments.cc
-  "FUNCTION_CALLBACK",
+  "External Function",#"FUNCTION_CALLBACK",
+  "External Constructor",#"FUNCTION_CALLBACK_CONSTRUCT_CALL",
   # arguments.h
   "INDEXED_PROPERTY_ENUMERATOR_CALLBACK",
   "ACCESSOR_GETTER_CALLBACK",
@@ -45,7 +46,7 @@ EXTERNAL_DETAILS = (
   "INDEXED_PROPERTY_DELETER_CALLBACK",
   "NAMED_PROPERTY_SETTER_CALLBACK",
   "INDEXED_PROPERTY_SETTER_CALLBACK",
-  "ACCESSOR_SETTER_CALLBACK"
+  "Accessor Setter"#"ACCESSOR_SETTER_CALLBACK"
   )
 
 V8_STATES_PLOT = ('IDLE', 'EXTERNAL', 'JS', 'IC_RUNTIME', 'RUNTIME', 'COMPILER', 'GC', 'OTHER')
@@ -215,7 +216,7 @@ class Plotter():
         elif state == 1:
           state = 0
         elif state == 2:
-          if len(tokens) != 2 * len(EXTERNAL_DETAILS) + 1 or not line.startswith('VMTimerEventExternal'):
+          if len(tokens) != 2 * len(EXTERNAL_DETAILS) + 1 or not line.startswith('VMTimerEventExternal') or not all(item.isdigit() for item in tokens[1:]):
             failed_lines += 1
             state = 0
           else:
