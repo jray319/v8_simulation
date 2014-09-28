@@ -116,7 +116,7 @@ class Plotter():
     plt.subplot2grid((grid_row, grid_col), (1, grid_col - 3), colspan = 3)
     total_ticks = 0
     for key in EXTERNAL_DETAILS:
-      total_ticks += sum(self.data_external[key])
+      total_ticks += sum(self.data_external[key]) + 1
     plt.table(cellText = [[str(100 * sum(self.data_external[key]) / total_ticks) + ' %', str(sum(self.num_external[key]))] for key in reversed(EXTERNAL_DETAILS)],
               rowLabels = EXTERNAL_DETAILS[::-1],
               rowColours = colors[::-1],
