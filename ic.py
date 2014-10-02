@@ -56,10 +56,21 @@ if __name__ == '__main__':
   for test in sorted(ic_stats):
     print '\n' + test
     print '|| ||' + '||'.join(IC_LIST) + '||'
+    total = {}
+    for ic_type in IC_LIST:
+      temp_total = 0
+      for ic_state in IC_STATES:
+        temp_total += ic_stats[test][ic_type][ic_state][0]
+      total[ic_type] = temp_total + 1
     for ic_state in IC_STATES:
       str_buffer = '||' + ic_state
       for ic_type in IC_LIST:
         str_buffer += '|' + str(ic_stats[test][ic_type][ic_state][0]) + ' (' + str(ic_stats[test][ic_type][ic_state][1]) + ')'
+      str_buffer += '|'
+      print str_buffer
+      str_buffer = '|| '
+      for ic_type in IC_LIST:
+        str_buffer += '|' + str(100 * ic_stats[test][ic_type][ic_state][0] / total[ic_type]) + '%'
       str_buffer += '|'
       print str_buffer
 
