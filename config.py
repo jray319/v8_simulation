@@ -4,8 +4,8 @@ import os
 import local_config
 
 D8 = os.path.join(local_config.V8_ROOT, 'out/x64.release/d8')
-#D8_ARGS = ['--allow-natives-syntax', '--expose_gc', '--nocrankshaft']
 D8_ARGS = ['--allow-natives-syntax', '--expose_gc']
+#D8_ARGS = ['--nocrankshaft']
 #D8_ARGS += ['--init_new_space_size=65536', '--max_new_space_size=65536']
 #D8_ARGS += ['--object_literal_max_key=1000', '--fast_properties_max_key=1000']
 #D8_ARGS += ['--nocollect_maps', '--noflush_code', '--nocleanup_code_caches_at_gc', '--trace_gc']

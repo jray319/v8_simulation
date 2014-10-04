@@ -8,7 +8,62 @@ import operator
 # Custom modules
 import config
 import which
-import vm_timer
+#import vm_timer
+
+def prepare_d8_args_new(default_args, benchmark_suite_dir, test, test_dir, args):
+  ret = []
+  # Prepare flags.
+  ret += default_args
+  if args.extra_v8_flags != None:
+    ret += args.extra_v8_flags.split(' ')
+  if args.vm_timer:
+    v8_log = os.path.join(test_dir, args.v8_log)
+    #ret += ['--log-vm-timer', '--log-lazy', '--logfile', v8_log]
+    ret += ['--vm-timer']
+  # Prepare files.
+  base_js = os.path.join(benchmark_suite_dir, 'iacoma_base.js')
+  test_js = os.path.join(benchmark_suite_dir, test + '.js')
+
+  if True:
+    profile_file = os.path.join(test_dir, 'profile.js')
+    with open(profile_file, 'w') as f:
+      f.write('gc();\n')
+      
+      if os.path.isfile(base_js):
+        f.write('load("' + base_js + '");\n')
+      f.write('load("' + test_js + '");\n')
+      f.write('if(typeof ' + args.setup_func + ' != "undefined") ' + args.setup_func + '();\n')
+
+      # Warmup
+      for _ in range(args.warmup):
+        f.write(args.sim_func + '();\n')
+      
+      f.write('gc();\n')
+      
+      f.write('print("PROFILE BEGIN");\n')
+      f.write('var start_clock_tick = %GetClockTick();\n')
+      
+      if args.pin:
+        f.write('%EnterSimulation();\n')
+        f.write('%BeginSimulation();\n')
+      if args.vm_timer:
+        f.write('%ResetVMTimer();\n')
+        #f.write('%StartLogger();\n')
+      
+      f.write(args.sim_func + '();\n')
+      
+      if args.pin:
+        f.write('%EndSimulation();\n')
+        f.write('%ExitSimulation();\n')
+      if args.vm_timer:
+        f.write('%PrintVMTimer();\n')
+
+      f.write('var elapsed_clock_ticks = %GetClockTick() - start_clock_tick;\n')
+      f.write('print("Elapsed Clock Ticks: " + elapsed_clock_ticks);\n')
+      
+      f.write('if(typeof ' + args.teardown_func + ' != "undefined") ' + args.teardown_func + '();\n')
+    ret += ['-f', profile_file]
+  return ret
 
 # Prepare the arguments for D8.
 # Create wrapper files for the simulation.
@@ -22,8 +77,6 @@ def prepare_d8_args(default_args, benchmark_suite_dir, test, test_dir, args):
     ret.append('--new-context')
     if not args.keep_ic:
       ret.append('--send-idle-notification')
-  if args.sampling:
-    v8_log = os.path.join(test_dir, args.v8_log)
     ret += ['--prof', '--prof_lazy', '--log_snapshot_positions', '--logfile', v8_log]
   if args.vm_timer:
     v8_log = os.path.join(test_dir, args.v8_log)
@@ -54,8 +107,6 @@ def prepare_d8_args(default_args, benchmark_suite_dir, test, test_dir, args):
       if args.pin:
         f.write('%EnterSimulation();\n')
         f.write('%BeginSimulation();\n')
-      if args.sampling:
-        f.write('%ProfilerResume();\n')
       if args.vm_timer:
         f.write('%ResetVMTimer();\n')
         f.write('%StartLogger();\n')
@@ -63,8 +114,6 @@ def prepare_d8_args(default_args, benchmark_suite_dir, test, test_dir, args):
       if args.pin:
         f.write('%EndSimulation();\n')
         f.write('%ExitSimulation();\n')
-      if args.sampling:
-        f.write('%ProfilerPause();\n')
       if args.vm_timer:
         f.write('%PrintVMTimer();\n')
       f.write('if(typeof ' + args.teardown_func + ' != "undefined") ' + args.teardown_func + '();\n')
@@ -87,8 +136,6 @@ def prepare_d8_args(default_args, benchmark_suite_dir, test, test_dir, args):
       if args.pin:
         f.write('%EnterSimulation();\n')
         f.write('%BeginSimulation();\n')
-      if args.sampling:
-        f.write('%ProfilerResume();\n')
       if args.vm_timer:
         f.write('%ResetVMTimer();\n')
         f.write('%StartLogger();\n')
@@ -96,8 +143,6 @@ def prepare_d8_args(default_args, benchmark_suite_dir, test, test_dir, args):
       if args.pin:
         f.write('%EndSimulation();\n')
         f.write('%ExitSimulation();\n')
-      if args.sampling:
-        f.write('%ProfilerPause();\n')
       if args.vm_timer:
         f.write('%PrintVMTimer();\n')
       f.write('if(typeof ' + args.teardown_func + ' != "undefined") ' + args.teardown_func + '();\n')
@@ -108,7 +153,8 @@ def prepare_d8_args(default_args, benchmark_suite_dir, test, test_dir, args):
 def prepare_command(default_d8_args, benchmark_suite_dir, test, test_dir, args, config):
   command = []
   test_js = os.path.join(benchmark_suite_dir, test + '.js')
-  d8_args = prepare_d8_args(default_d8_args, benchmark_suite_dir, test, test_dir, args)
+  #d8_args = prepare_d8_args(default_d8_args, benchmark_suite_dir, test, test_dir, args)
+  d8_args = prepare_d8_args_new(default_d8_args, benchmark_suite_dir, test, test_dir, args)
   if args.pin:
     pintool_output = os.path.join(test_dir, 'pintool.out')
     command += [config.PIN] + config.PIN_ARGS + ['-t', config.PINTOOL] + config.PINTOOL_ARGS + ['-o', pintool_output, '--']
@@ -119,7 +165,6 @@ def prepare_command(default_d8_args, benchmark_suite_dir, test, test_dir, args, 
 parser = argparse.ArgumentParser(description='Run JavaScript simulation.')
 parser.add_argument('--suite', dest='suite_name', type=str, required=True, help='benchmark suite name')
 parser.add_argument('--pin', dest='pin', action='store_true', help='profile the dynamic instruction count using pin')
-parser.add_argument('--sampling', dest='sampling', action='store_true', help='profile the execution time using the sampling profiler')
 parser.add_argument('--vm-timer', dest='vm_timer', action='store_true', help='profile the execution time using the VM timer')
 parser.add_argument('--v8-log', dest='v8_log', type=str, default='v8.log', help='the name of v8 log file')
 parser.add_argument('--warmup', dest='warmup', type=int, default=3, help='the number of warmup iterations')
@@ -199,17 +244,12 @@ for test in tests:
       if i == 0:
         print command
       subprocess.call(command, stdout = f)
-    # Process v8 log of sampling.
-    if args.sampling:
-      tick_processor_output = os.path.join(test_dir, 'sampling.out.' + str(i))
-      with open(tick_processor_output, 'w') as f:
-        subprocess.call([config.V8_TICK_PROCESSOR, '--snapshot-log=' + config.V8_SNAPSHOT_LOG, os.path.join(test_dir, args.v8_log)], stdout = f)
-    if args.vm_timer and i == args.repeat - 1:
-      vm_timer_output[test] = vm_timer.read_vm_timer_output(simulation_output)
+    #if args.vm_timer and i == args.repeat - 1:
+    #  vm_timer_output[test] = vm_timer.read_vm_timer_output(simulation_output)
 
-print '||Name||JS||GC||COMPILER||IC_RUNTIME||RUNTIME||OTHER||EXTERNAL||IDLE||'
-avg = [0] * 8
-for test in vm_timer_output:
-  print '||' + test + '|' + '|'.join(map(lambda x: str(x) + '%', vm_timer_output[test])) + '|'
-  avg = map(operator.add, avg, vm_timer_output[test])
-print '||average|' + '|'.join(map(lambda x: str(x / len(vm_timer_output)) + '%', avg)) + '|'
+#print '||Name||JS||GC||COMPILER||IC_RUNTIME||RUNTIME||OTHER||EXTERNAL||IDLE||'
+#avg = [0] * 8
+#for test in vm_timer_output:
+#  print '||' + test + '|' + '|'.join(map(lambda x: str(x) + '%', vm_timer_output[test])) + '|'
+#  avg = map(operator.add, avg, vm_timer_output[test])
+#print '||average|' + '|'.join(map(lambda x: str(x / len(vm_timer_output)) + '%', avg)) + '|'
