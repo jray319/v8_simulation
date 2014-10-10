@@ -34,6 +34,8 @@ def read_ic_stat(log_file):
           state = 2
         elif 'MISS' in line:
           state = 0
+        elif 'Average Distance' in line:
+          ic_stat[ic_type][ic_state].append(float(line.split(':')[1]))
       elif state == 2:
         ic_stat[ic_type][ic_state].append(int(line.split(':')[1]))
         state = 1
@@ -65,7 +67,10 @@ if __name__ == '__main__':
     for ic_state in IC_STATES:
       str_buffer = '||' + ic_state
       for ic_type in IC_LIST:
-        str_buffer += '|' + str(ic_stats[test][ic_type][ic_state][0]) + ' (' + str(ic_stats[test][ic_type][ic_state][1]) + ')'
+        str_buffer += '|' + str(ic_stats[test][ic_type][ic_state][0]) + ' (M:' + str(ic_stats[test][ic_type][ic_state][1])
+        if len(ic_stats[test][ic_type][ic_state]) == 3:
+          str_buffer += '/D:' + str(ic_stats[test][ic_type][ic_state][2])
+        str_buffer += ')'
       str_buffer += '|'
       print str_buffer
       str_buffer = '|| '
