@@ -1,7 +1,7 @@
 import os
 import sys
 
-IC_LIST = ('load', 'store', 'keyed_load', 'keyed_store', 'binaryop')#, 'to_boolean'}
+IC_LIST = ('load', 'store', 'keyed_load', 'keyed_store', 'binaryop', 'to_boolean')
 IC_STATES = ('UNINITIALIZED', 'PREMONOMORPHIC', 'MONOMORPHIC', 'POLYMORPHIC', 'MEGAMORPHIC', 'GENERIC')
 
 class IC:
@@ -41,17 +41,20 @@ def read_ic_stat(log_file):
 
 if __name__ == '__main__':
   ic_stats = {}
-  for root, dirs, _ in os.walk(sys.argv[1]):
-    for dir in dirs:
-      test_name = dir
-      #print test_name
-      test_path = os.path.join(root, dir)
-      for _, _, files in os.walk(test_path):
-        for file in files:
-          if file.startswith('simulation'):
-            #print '    ' + file
-            log_file = os.path.join(test_path, file)
-            ic_stats[test_name] = read_ic_stat(log_file)
+  if os.path.isfile(sys.argv[1]):
+    ic_stats[sys.argv[1]] = read_ic_stat(sys.argv[1])
+  else:
+    for root, dirs, _ in os.walk(sys.argv[1]):
+      for dir in dirs:
+        test_name = dir
+        #print test_name
+        test_path = os.path.join(root, dir)
+        for _, _, files in os.walk(test_path):
+          for file in files:
+            if file.startswith('simulation'):
+              #print '    ' + file
+              log_file = os.path.join(test_path, file)
+              ic_stats[test_name] = read_ic_stat(log_file)
 
   for test in sorted(ic_stats):
     print '\n' + test
