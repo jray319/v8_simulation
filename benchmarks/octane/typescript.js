@@ -25,9 +25,6 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-load('typescript-compiler.js');
-load('typescript-input.js');
-
 var typescript = new BenchmarkSuite('Typescript', [255011322], [
   new Benchmark("Typescript",
                 false,

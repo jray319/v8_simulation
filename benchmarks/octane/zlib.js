@@ -25,8 +25,6 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-load('zlib-data.js');
-
 new BenchmarkSuite('zlib', [152815148], [
   new Benchmark('zlib', false, true, 10,
     runZlib, undefined, tearDownZlib, null, 3)]);

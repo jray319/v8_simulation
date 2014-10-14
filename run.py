@@ -22,7 +22,13 @@ def prepare_d8_args_new(default_args, benchmark_suite_dir, test, test_dir, args)
     ret += ['--vm-timer']
   # Prepare files.
   base_js = os.path.join(benchmark_suite_dir, 'iacoma_base.js')
-  test_js = os.path.join(benchmark_suite_dir, test + '.js')
+  test_js = []
+  for root, dirs, files in os.walk(benchmark_suite_dir):
+    for f in files:
+      if f.startswith(test):
+        test_js.append(os.path.join(benchmark_suite_dir, f))
+  #print test_js
+  #test_js = [os.path.join(benchmark_suite_dir, test + '.js')]
 
   if True:
     profile_file = os.path.join(test_dir, 'profile.js')
@@ -31,7 +37,8 @@ def prepare_d8_args_new(default_args, benchmark_suite_dir, test, test_dir, args)
       
       if os.path.isfile(base_js):
         f.write('load("' + base_js + '");\n')
-      f.write('load("' + test_js + '");\n')
+      for tf in test_js:
+        f.write('load("' + tf + '");\n') 
       f.write('if(typeof ' + args.setup_func + ' != "undefined") ' + args.setup_func + '();\n')
 
       # Warmup
