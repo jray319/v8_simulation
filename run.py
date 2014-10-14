@@ -50,7 +50,8 @@ def prepare_d8_args_new(default_args, benchmark_suite_dir, test, test_dir, args)
         f.write('%ResetVMTimer();\n')
         #f.write('%StartLogger();\n')
       
-      f.write(args.sim_func + '();\n')
+      for _ in (range(args.profile)):
+        f.write(args.sim_func + '();\n')
       
       if args.pin:
         f.write('%EndSimulation();\n')
