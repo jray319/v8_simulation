@@ -4,22 +4,68 @@ import sys
 IC_LIST = ('load', 'store', 'keyed_load', 'keyed_store', 'binaryop', 'to_boolean')
 IC_STATES = ('UNINITIALIZED', 'PREMONOMORPHIC', 'MONOMORPHIC', 'POLYMORPHIC', 'MEGAMORPHIC', 'GENERIC')
 
+SUNSPIDER_TOTAL_INSTS = {
+  'crypto-sha1':36021802,
+  'bitops-bits-in-byte':41752401,
+  '3d-morph':372468869,
+  'date-format-tofte':39090683,
+  'math-partial-sums':140430260,
+  'access-fannkuch':115712242,
+  'string-validate-input':85224487,
+  'bitops-nsieve-bits':106812690,
+  'string-base64':60425059,
+  'access-nsieve':38901723,
+  'string-tagcloud':70347807,
+  'regexp-dna':32112100,
+  'string-fasta':67683614,
+  'controlflow-recursive':20978020,
+  'bitops-3bit-bits-in-byte':37405535,
+  'string-unpack-code':109651134,
+  'access-nbody':95735020,
+  '3d-cube':84003777,
+  '3d-raytrace':68172193,
+  'access-binary-trees':19992412,
+  'math-cordic':80397057,
+  'date-format-xparb':35254923,
+  'math-spectral-norm':41319763,
+  'crypto-md5':35136396,
+  'crypto-aes':44286978,
+  'bitops-bitwise-and':35034133
+}
+
+JSBENCH_TOTAL_INSTS = {
+  'google-chrome':555777970,
+  'yahoo-opera':319045273,
+  'google-opera':740145348,
+  'facebook-chrome':830551708,
+  'amazon-chrome':239888700,
+  'twitter-webkit':605111265,
+  'yahoo-firefox':318873332,
+  'google-firefox':713000375,
+  'amazon-opera':250534326
+}
+
 OCTANE_TOTAL_INSTS = {
-  'box2d':519969543,
-  'code-load':43975462,
-  'crypto':278157110,
-  'deltablue':14330799,
-  'earley-boyer':163118067,
-  'mandreel':5569496040,
-  'navier-stokes':377376589,
-  'pdfjs':502708610,
-  'raytrace':89258366,
-  'regexp':179137069,
-  'richards':7465899,
-  'splay':7879398
+  'deltablue':14327490,
+  'navier-stokes':377379864,
+  'pdfjs':502459780,
+  'mandreel':5569411020,
+  'zlib':22105988104,
+  'gbemu':901821164,
+  'regexp':179117988,
+  'crypto':278157843,
+  'earley-boyer':163118461,
+  'raytrace':89254940,
+  'splay':7869264,
+  'box2d':519985961,
+  'code-load':43986521,
+  'richards':7466074,
+  'typescript':4893777142
 }
 
 TOTAL_INSTS = {
+  'sunspider':SUNSPIDER_TOTAL_INSTS,
+  'jsbench':JSBENCH_TOTAL_INSTS,
   'octane':OCTANE_TOTAL_INSTS
 }
 
@@ -79,23 +125,63 @@ if __name__ == '__main__':
               log_file = os.path.join(test_path, file)
               ic_stats[test_name] = read_ic_stat(log_file)
 
+  suite_name = 'jsbench'
+  str_buffer = '||Test||'
+  str_buffer += '||'.join(['Total Insts', \
+                           'Poly Load', 'Mega Load', \
+                           'Poly Store', 'Mega Store', \
+                           'Generic KLoad', 'Generic KStore'])
+  str_buffer += '|'
+  print str_buffer
+  for test in sorted(ic_stats):
+    str_buffer = '||' + test + '|'
+    #str_buffer += '|'.join(map(str, [TOTAL_INSTS[suite_name][test], \
+    str_buffer += '|'.join(map(str, ['N/A', \
+                                     ic_stats[test]['load']['POLYMORPHIC'][0], ic_stats[test]['load']['MEGAMORPHIC'][0], \
+                                     ic_stats[test]['store']['POLYMORPHIC'][0], ic_stats[test]['store']['MEGAMORPHIC'][0], \
+                                     ic_stats[test]['keyed_load']['GENERIC'][0], ic_stats[test]['keyed_store']['GENERIC'][0] \
+                                    ]))
+    str_buffer += '|'
+    print str_buffer
+
+  sys.exit(1)
+
+  suite_name = 'octane'
+  #suite_name = 'sunspider'
+  #suite_name = 'jsbench'
   # Instruction counts
   for test in sorted(ic_stats):
     print '\n' + test
-    total_insts = TOTAL_INSTS['octane'][test]
+    total_insts = TOTAL_INSTS[suite_name][test]
     print 'Total Insts: ' + str(total_insts)
     polymorphic_load = ic_stats[test]['load']['POLYMORPHIC'][0]
     polymorphic_load_distance = ic_stats[test]['load']['POLYMORPHIC'][2]
+    polymorphic_store = ic_stats[test]['store']['POLYMORPHIC'][0]
+    polymorphic_store_distance = ic_stats[test]['store']['POLYMORPHIC'][2]
     megamorphic_load = ic_stats[test]['load']['MEGAMORPHIC'][0]
+    megamorphic_store = ic_stats[test]['store']['MEGAMORPHIC'][0]
     generic_keyed_load = ic_stats[test]['keyed_load']['GENERIC'][0]
+    generic_keyed_store = ic_stats[test]['keyed_store']['GENERIC'][0]
     print 'Polymorphic Load: ' + str(polymorphic_load)
-    print 'Polymorphic Load Distance: ' + str(polymorphic_load_distance)
+    print '    Polymorphic Load Distance: ' + str(polymorphic_load_distance)
+    print 'Polymorphic Store: ' + str(polymorphic_store)
+    print '    Polymorphic Store Distance: ' + str(polymorphic_store_distance)
     print 'Megamorphic Load: ' + str(megamorphic_load)
+    print 'Megamorphic Store: ' + str(megamorphic_store)
     print 'Generic KeyedLoad: ' + str(generic_keyed_load)
+    print 'Generic KeyedStore: ' + str(generic_keyed_store)
     polymorphic_load_cost = 2 * (polymorphic_load_distance - 1)
+    polymorphic_store_cost = 2 * (polymorphic_store_distance - 1)
     megamorphic_load_cost = 30
-    generic_keyed_load_cost = 500
-    maximum_reduction = int(polymorphic_load * polymorphic_load_cost + megamorphic_load * megamorphic_load_cost + generic_keyed_load * generic_keyed_load_cost)
+    megamorphic_store_cost = 30
+    generic_keyed_load_cost = 300
+    generic_keyed_store_cost = 400
+    maximum_reduction = int(polymorphic_load * polymorphic_load_cost \
+                          + polymorphic_store * polymorphic_store_cost \
+                          + megamorphic_load * megamorphic_load_cost \
+                          + megamorphic_store * megamorphic_store_cost \
+                          + generic_keyed_load * generic_keyed_load_cost
+                          + generic_keyed_store * generic_keyed_store_cost)
     print 'Maximum Reduction: ' + str(maximum_reduction) + ' (' + str(round(100.0 * maximum_reduction / total_insts, 2)) + '%)'
 
   sys.exit(1)
@@ -103,7 +189,7 @@ if __name__ == '__main__':
   # Instruction counts
   for test in sorted(ic_stats):
     print '\n' + test
-    total_insts = TOTAL_INSTS['octane'][test]
+    total_insts = TOTAL_INSTS[suite_name][test]
     print 'Total Insts: ' + str(total_insts)
     monomorphic_load = ic_stats[test]['load']['MONOMORPHIC'][0]
     polymorphic_load = ic_stats[test]['load']['POLYMORPHIC'][0]
