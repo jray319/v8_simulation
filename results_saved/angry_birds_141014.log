@@ -1,0 +1,128 @@
+TOTAL: 71208M ticks, -1806088008 ticks (6864646 times set)
+TOTAL_INTERNAL: 36288M ticks (50%)
+    JS: 7462M ticks, -1127678484 ticks (10%, 20%, 19468 times entered, 3259248 times set)
+    GC: 1006M ticks, 1006677303 ticks (1%, 2%, 54 times entered, 6047 times set)
+    COMPILER: 3076M ticks, -1218804338 ticks (4%, 8%, 14144 times entered, 14174 times set)
+    IC_RUNTIME: 1340M ticks, 1340712026 ticks (1%, 3%, 292918 times entered, 304910 times set)
+        5000 (LoadIC_Miss): 833M ticks, 833707744 ticks (62%, 190055 times)
+        5001 (KeyedLoadIC_Miss): 36M ticks, 36527578 ticks (2%, 5158 times)
+        5002 (StoreIC_Miss): 334M ticks, 334434622 ticks (24%, 51886 times)
+        5003 (StoreIC_ArrayLength): 0M ticks, 160192 ticks (0%, 115 times)
+        5004 (StoreIC_Slow): 11M ticks, 11571815 ticks (0%, 5300 times)
+        5005 (SharedStoreIC_ExtendStorage): 10M ticks, 10731982 ticks (0%, 10718 times)
+        5006 (KeyedStoreIC_Miss): 20M ticks, 20616740 ticks (1%, 1606 times)
+        5007 (KeyedStoreIC_Slow): 8M ticks, 8115465 ticks (0%, 5195 times)
+        5014 (CompareIC_Miss): 15M ticks, 15752506 ticks (1%, 5409 times)
+        5015 (BinaryOpIC_Miss): 44M ticks, 44179942 ticks (3%, 8706 times)
+        5016 (CompareNilIC_Miss): 10M ticks, 10497755 ticks (0%, 1589 times)
+        5018 (ToBooleanIC_Miss): 14M ticks, 14415685 ticks (1%, 7181 times)
+    RUNTIME: 1628M ticks, 1628775958 ticks (2%, 4%, 1950509 times entered, 1968661 times set)
+    OTHER: 246M ticks, 246501898 ticks (0%, 0%, 147617 times entered, 164967 times set)
+    EXTERNAL: 34920M ticks, 560344909 ticks (49%, N/A, 1007617 times entered, 1081875 times set)
+    IDLE: 21527M ticks, 52350016 ticks (30%, 59%, 0 times entered, 64764 times set)
+
+COUNTERS
+
+load
+    Total Probes: 78847536
+    Total Misses: 185634
+    UNINITIALIZED: 121278
+        Miss: 121278
+    PREMONOMORPHIC: 43026
+        Miss: 43026
+    MONOMORPHIC: 63733131
+        Miss: 6113
+        Average Distance: 1.00
+    POLYMORPHIC: 7481531
+        Miss: 5887
+        Average Distance: 1.54
+    MEGAMORPHIC: 7468570
+        Miss: 9330
+    GENERIC: 0
+        Miss: 0
+
+store
+    Total Probes: 8645014
+    Total Misses: 48967
+    UNINITIALIZED: 29315
+        Miss: 29315
+    PREMONOMORPHIC: 13413
+        Miss: 13413
+    MONOMORPHIC: 7265037
+        Miss: 1573
+        Average Distance: 1.00
+    POLYMORPHIC: 1165798
+        Miss: 1530
+        Average Distance: 1.77
+    MEGAMORPHIC: 171451
+        Miss: 3136
+    GENERIC: 0
+        Miss: 0
+
+keyed_load
+    Total Probes: 6311837
+    Total Misses: 5151
+    UNINITIALIZED: 3414
+        Miss: 3414
+    PREMONOMORPHIC: 1381
+        Miss: 1381
+    MONOMORPHIC: 56658
+        Miss: 263
+        Average Distance: 1.00
+    POLYMORPHIC: 423877
+        Miss: 11
+        Average Distance: 1.18
+    MEGAMORPHIC: 4808546
+        Miss: 82
+    GENERIC: 1017961
+        Miss: 0
+
+keyed_store
+    Total Probes: 870933
+    Total Misses: 1600
+    UNINITIALIZED: 1113
+        Miss: 1113
+    PREMONOMORPHIC: 396
+        Miss: 396
+    MONOMORPHIC: 509
+        Miss: 35
+        Average Distance: 0.95
+    POLYMORPHIC: 0
+        Miss: 0
+    MEGAMORPHIC: 555259
+        Miss: 56
+    GENERIC: 313656
+        Miss: 0
+
+binaryop
+    Total Probes: 0
+    Total Misses: 0
+    UNINITIALIZED: 0
+        Miss: 0
+    PREMONOMORPHIC: 0
+        Miss: 0
+    MONOMORPHIC: 0
+        Miss: 0
+    POLYMORPHIC: 0
+        Miss: 0
+    MEGAMORPHIC: 0
+        Miss: 0
+    GENERIC: 0
+        Miss: 0
+
+to_boolean
+    Total Probes: 0
+    Total Misses: 0
+    UNINITIALIZED: 0
+        Miss: 0
+    PREMONOMORPHIC: 0
+        Miss: 0
+    MONOMORPHIC: 0
+        Miss: 0
+    POLYMORPHIC: 0
+        Miss: 0
+    MEGAMORPHIC: 0
+        Miss: 0
+    GENERIC: 0
+        Miss: 0
+
