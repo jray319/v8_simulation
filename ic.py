@@ -128,21 +128,92 @@ if __name__ == '__main__':
   suite_name = 'jsbench'
   str_buffer = '||Test||'
   str_buffer += '||'.join(['Total Insts', \
-                           'Poly Load', 'Mega Load', \
-                           'Poly Store', 'Mega Store', \
-                           'Generic KLoad', 'Generic KStore'])
+                           'Monomorphic', 'Polymorphic', 'Megamorphic', 'Generic', 'Total IC' \
+                          ])
+  str_buffer += '|'
+  print str_buffer
+  for test in sorted(ic_stats):
+    monomorphic_total = ic_stats[test]['load']['MONOMORPHIC'][0] \
+                      + ic_stats[test]['store']['MONOMORPHIC'][0] \
+                      + ic_stats[test]['keyed_load']['MONOMORPHIC'][0] \
+                      + ic_stats[test]['keyed_store']['MONOMORPHIC'][0]
+    polymorphic_total = ic_stats[test]['load']['POLYMORPHIC'][0] \
+                      + ic_stats[test]['store']['POLYMORPHIC'][0]
+    megamorphic_total = ic_stats[test]['load']['MEGAMORPHIC'][0] \
+                      + ic_stats[test]['store']['MEGAMORPHIC'][0]
+    generic_total = ic_stats[test]['keyed_load']['GENERIC'][0] \
+                  + ic_stats[test]['keyed_store']['GENERIC'][0]
+
+    monomorphic_cost = 5
+    polymorphic_cost = 3 + 2 * ic_stats[test]['load']['POLYMORPHIC'][2]
+    megamorphic_cost = 30
+    generic_cost = 300
+
+    monomorphic_cost_total = monomorphic_cost * monomorphic_total
+    polymorphic_cost_total = int(polymorphic_cost * polymorphic_total)
+    megamorphic_cost_total = megamorphic_cost * megamorphic_total
+    generic_cost_total = generic_cost * generic_total
+
+    cost_total = monomorphic_cost_total + polymorphic_cost_total + megamorphic_cost_total + generic_cost_total
+
+    '''str_buffer = '||' + test + '|'
+    str_buffer += '|'.join(map(str, ['N/A', \
+                                     monomorphic_cost_total, \
+                                     polymorphic_cost_total, \
+                                     megamorphic_cost_total, \
+                                     generic_cost_total, \
+                                     cost_total]))
+    str_buffer += '|'
+    print str_buffer
+    sys.exit(1)'''
+
+    total_insts = TOTAL_INSTS[suite_name][test]
+
+    monomorphic_cost_total_percent = str(round(100.0 * monomorphic_cost_total / total_insts, 2)) + '%'
+    polymorphic_cost_total_percent = str(round(100.0 * polymorphic_cost_total / total_insts, 2)) + '%'
+    megamorphic_cost_total_percent = str(round(100.0 * megamorphic_cost_total / total_insts, 2)) + '%'
+    generic_cost_total_percent = str(round(100.0 * generic_cost_total / total_insts, 2)) + '%'
+
+    cost_total_percent = str(round(100.0 * cost_total / total_insts, 2)) + '%'
+
+    str_buffer = '||' + test + '|'
+    str_buffer += '|'.join(map(str, [total_insts, \
+                                     monomorphic_cost_total_percent, \
+                                     polymorphic_cost_total_percent, \
+                                     megamorphic_cost_total_percent, \
+                                     generic_cost_total_percent, \
+                                     cost_total_percent]))
+    str_buffer += '|'
+    print str_buffer
+    
+    
+    #print str(5 * 100 * monomorphic_total / TOTAL_INSTS[suite_name][test])
+
+  sys.exit(1)
+
+  suite_name = 'octane'
+  str_buffer = '||Test||'
+  str_buffer += '||'.join(['Total Insts', \
+                           'Mono Load', 'Poly Load', 'Mega Load', \
+                           'Mono Store', 'Poly Store', 'Mega Store', \
+                           'Mono KLoad', 'Generic KLoad', \
+                           'Mono KStore', 'Generic KStore'])
   str_buffer += '|'
   print str_buffer
   for test in sorted(ic_stats):
     str_buffer = '||' + test + '|'
-    #str_buffer += '|'.join(map(str, [TOTAL_INSTS[suite_name][test], \
-    str_buffer += '|'.join(map(str, ['N/A', \
-                                     ic_stats[test]['load']['POLYMORPHIC'][0], ic_stats[test]['load']['MEGAMORPHIC'][0], \
-                                     ic_stats[test]['store']['POLYMORPHIC'][0], ic_stats[test]['store']['MEGAMORPHIC'][0], \
-                                     ic_stats[test]['keyed_load']['GENERIC'][0], ic_stats[test]['keyed_store']['GENERIC'][0] \
+    str_buffer += '|'.join(map(str, [TOTAL_INSTS[suite_name][test], \
+    #str_buffer += '|'.join(map(str, ['N/A', \
+                                     ic_stats[test]['load']['MONOMORPHIC'][0], ic_stats[test]['load']['POLYMORPHIC'][0], ic_stats[test]['load']['MEGAMORPHIC'][0], \
+                                     ic_stats[test]['store']['MONOMORPHIC'][0], ic_stats[test]['store']['POLYMORPHIC'][0], ic_stats[test]['store']['MEGAMORPHIC'][0], \
+                                     ic_stats[test]['keyed_load']['MONOMORPHIC'][0], ic_stats[test]['keyed_load']['GENERIC'][0], \
+                                     ic_stats[test]['keyed_store']['MONOMORPHIC'][0], ic_stats[test]['keyed_store']['GENERIC'][0] \
                                     ]))
     str_buffer += '|'
     print str_buffer
+    
+    #monomorphic_total = ic_stats[test]['load']['MONOMORPHIC'][0] + ic_stats[test]['store']['MONOMORPHIC'][0] + ic_stats[test]['keyed_load']['MONOMORPHIC'][0] + ic_stats[test]['keyed_store']['MONOMORPHIC'][0]
+    #print str(5 * 100 * monomorphic_total / TOTAL_INSTS[suite_name][test])
 
   sys.exit(1)
 
