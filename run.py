@@ -20,6 +20,8 @@ def prepare_d8_args_new(default_args, benchmark_suite_dir, test, test_dir, args)
     v8_log = os.path.join(test_dir, args.v8_log)
     #ret += ['--log-vm-timer', '--log-lazy', '--logfile', v8_log]
     ret += ['--vm-timer']
+  if args.count_ic:
+    ret += ['--nocrankshaft', '--count-ic-native', '--vm-state-detail-ic-runtime']
   # Prepare files.
   base_js = os.path.join(benchmark_suite_dir, 'iacoma_base.js')
   test_js = []
@@ -174,6 +176,7 @@ parser = argparse.ArgumentParser(description='Run JavaScript simulation.')
 parser.add_argument('--suite', dest='suite_name', type=str, required=True, help='benchmark suite name')
 parser.add_argument('--pin', dest='pin', action='store_true', help='profile the dynamic instruction count using pin')
 parser.add_argument('--vm-timer', dest='vm_timer', action='store_true', help='profile the execution time using the VM timer')
+parser.add_argument('--count-ic', dest='count_ic', action='store_true', help='count ic accesses')
 parser.add_argument('--v8-log', dest='v8_log', type=str, default='v8.log', help='the name of v8 log file')
 parser.add_argument('--warmup', dest='warmup', type=int, default=3, help='the number of warmup iterations')
 parser.add_argument('--profile', dest='profile', type=int, default=1, help='the number of profile iterations (recommended for a very short test)')
